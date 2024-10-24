@@ -1,5 +1,5 @@
 package com.jsrdev.books.service
 
-interface ConvertData {
+interface DeserializeData {
     fun <T> getData(json: String, genericClass: Class<T>): T
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.IOException
 
-class ConvertBookData : ConvertData {
+class DeserializeBookData : DeserializeData {
     private val objectMapper = jacksonObjectMapper()
 
     override fun <T> getData(json: String, genericClass: Class<T>): T {

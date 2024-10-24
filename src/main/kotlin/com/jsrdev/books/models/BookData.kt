@@ -8,7 +8,6 @@ data class BookData(
     @JsonProperty("id") val id: Int = 0,
     @JsonProperty("title") val title: String = "",
     @JsonProperty("authors") val authors: List<AuthorData> = emptyList(),
-    @JsonProperty("translators") val translators: List<String> = emptyList(),
     @JsonProperty("bookshelves") val bookshelves: List<String> = emptyList(),
     @JsonProperty("languages") val languages: List<String> = emptyList(),
     @JsonProperty("copyright") val copyright: Boolean = false,
