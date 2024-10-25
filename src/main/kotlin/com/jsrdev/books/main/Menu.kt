@@ -14,12 +14,27 @@ class Menu(
 
     fun showMenu() {
         println("Data: ${getResultData()}")
-        println()
 
         val resultData: List<BookData> = resultData().results
 
-        val booksToShow = 7
+        val booksToShow = 5
         showBooks(booksToShow, resultData)
+
+        showTop10MostDownloadedBooks(resultData)
+    }
+
+    private fun showTop10MostDownloadedBooks(bookList: List<BookData>) {
+        println()
+        println("Top 10 most downloaded books")
+
+        return bookList.asSequence()
+            .filter { it.downloadCount > 0 }
+            .sortedByDescending { it.downloadCount }
+            .map { it.copy(title = it.title.uppercase()) }
+            .take(10)
+            .forEachIndexed { ind, book ->
+                println("${ind + 1}: ${book.title} ------- download count: ${book.downloadCount}")
+            }
     }
 
     private fun showBooks(booksToShow: Int, bookList: List<BookData>) {
@@ -34,7 +49,7 @@ class Menu(
         println()
         println("$booksToShow random books:")
 
-        bookList.asSequence()
+        return bookList.asSequence()
             .drop(startIndex) // Saltamos hasta el índice inicial calculado
             .take(booksToShow) // Tomamos los libros necesarios
             .forEachIndexed { ind, book ->
