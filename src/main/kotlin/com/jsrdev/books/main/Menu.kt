@@ -2,6 +2,7 @@ package com.jsrdev.books.main
 
 import com.jsrdev.books.models.BookData
 import com.jsrdev.books.models.ResultData
+import com.jsrdev.books.models.Statistics
 import com.jsrdev.books.service.DeserializeBookData
 import com.jsrdev.books.service.GetBookData
 import java.net.URLEncoder
@@ -30,6 +31,28 @@ class Menu(
         // search by title book
         showByTitleBook()
 
+        // statistics
+        getStatistics(resultData)
+
+    }
+
+    private fun getStatistics(data: List<BookData>) {
+        val stats: Statistics = data.asSequence()
+            .filter { it.downloadCount > 0 }
+            .map { it.downloadCount.toDouble() } // extraemos todas las descargas
+            .toList()
+            .let { downloadedCount ->
+                Statistics(
+                    count = downloadedCount.size,
+                    sum = downloadedCount.sum(),
+                    average = downloadedCount.average(),
+                    min = downloadedCount.minOrNull() ?: 0.0,
+                    max = downloadedCount.maxOrNull() ?: 0.0
+                )
+            }
+        println()
+        println("Statistics")
+        println("Count: ${stats.count}, Sum: ${stats.sum}, Average: ${"%.2f".format(stats.average)}, Min: ${stats.min}, Max: ${stats.max}")
     }
 
     private fun showByTitleBook() {
