@@ -51,7 +51,7 @@ class Menu(
                 )
             }
         println()
-        println("Statistics")
+        println("Downloaded Statistics: ")
         println("Count: ${stats.count}, Sum: ${stats.sum}, Average: ${"%.2f".format(stats.average)}, Min: ${stats.min}, Max: ${stats.max}")
     }
 
@@ -62,14 +62,14 @@ class Menu(
             titleBook = getTitleBook()
         }
 
-        titleBook = titleBook.trim().lowercase()
-        titleBook = encodedAndFormatTitleBook(titleBook)
+        val lowerTitle = titleBook.trim().lowercase()
+        titleBook = encodedAndFormatTitleBook(lowerTitle)
 
         val json: String = getStringData(buildUrl(title = titleBook))
         val resultDataByTitle: List<BookData> = resultData(json).results
 
         val book: BookData? = resultDataByTitle.asSequence()
-            .filter { it.languages.any { lang -> lang.equals("ES", ignoreCase = true)  }}
+            //.filter { it.languages.any { lang -> lang.equals("ES", ignoreCase = true)  }}
             .filter { it.title.contains(titleBook, ignoreCase = true) }
             .firstOrNull()
 
@@ -77,11 +77,10 @@ class Menu(
         return book?.let {
             println("Libro encontrado")
             println("$book")
-        } ?: println("No encontre ninguna coincidencia con: $titleBook")
+        } ?: println("No encontre ninguna coincidencia con: $lowerTitle")
     }
 
     private fun encodedAndFormatTitleBook(title: String): String {
-        // encodedSeriesName.replace("+", "%20")
         return URLEncoder.encode(title, StandardCharsets.UTF_8)
     }
 
